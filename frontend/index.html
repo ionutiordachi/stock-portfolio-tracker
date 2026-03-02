@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+          padding: 0;
+          box-sizing: border-box;
+          margin:0;
+        }
+        body{
+            display: flex;
+            font-family: sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background: #f3f3f3;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            background:white;
+            border-radius: 10px;
+            max-width: 500px;
+            display: flex;
+            padding: 30px;
+            align-items:center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        form .input-group{
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #555;
+            font-weight: bold;
+        }
+        .input-group input{
+            width: 100%;
+
+        }
+
+        h1{
+            margin:10px;
+        }
+        button{
+            padding:5px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            border:none;
+            color:white;
+            cursor:pointer;
+            background-color: #555;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover{
+            background-color: #666;
+        }
+        form p {
+            margin-top:10px;
+            color:#555;
+        }
+        form p a{
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+        form p a:hover{
+            text-decoration: underline;
+        }
+</style>
+</head>
+<body>
+    <form >
+        <h1> Welcome</h1>
+        <div class="input-group">
+            <label for="first">Username</label>
+            <input type="text" id="first" name="first">
+        </div>
+        <div class="input-group">
+            <label for="password">Password </label>
+            <input type="password" id="password" name="password">
+        </div>
+          <button type="submit">Submit</button>
+        <p>Not registered ?
+        <a href="#">
+            Create an account
+        </a>
+    </p>
+    </form>
+
+</body>
+</html>
