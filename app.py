@@ -1,48 +1,41 @@
-import streamlit as st
-import pyrebase
-st.set_page_config(page_title="Portofolio Tracker",layout="wide")
+from auth import *
 
-firebaseConfig = dict(st.secrets["firebase"])
+st.set_page_config(page_title="Portofolio Tracker", layout="wide")
 
-firebase= pyrebase.initialize_app(firebaseConfig)
-auth=firebase.auth()
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in= False
-def login_screen():
-    col1, col2, col3 = st.columns([1, 1, 1])
+if "user_email" not in st.session_state:
+    st.session_state.user_email= None
+if "id_token" not in st.session_state:
+    st.session_state.id_token=None
+def main_app():
+    if st.user.is_logged_in:
+        display_name=st.user.name or st.user.email
+    else:
+        display_name = st.session_state.user_email
 
+    col1,col2= st.columns([5,1])
+    with col1:
+        st.header(f"Bun venit, {display_name}")
     with col2:
-        with st.form("login_form"):
-            st.title("Welcome",)
+        if st.button("Log out", use_container_width= True):
 
-            email = st.text_input("Username")
-            password = st.text_input("Password", type="password")
+            st.session_state.logged_in = False
+            st.session_state.user_email=None
+            st.session_state.id_token=None
 
-            submit_button = st.form_submit_button("Submit",width="stretch")
+            if st.user.is_logged_in:
+                st.logout()
+            else:
+                st.rerun()
+    st.divider()
+    st.write("Portofolio Tracker - continut principal")
 
-            if submit_button:
-                try:
-                    user= auth.sign_in_with_email_and_password(email,password)
+is_firebase_logged = st.session_state.logged_in
+is_google_logged= st.user.is_logged_in
 
-                    st.session_state.logged_in=True
-                    st.session_state.user_email=email
-                    st.rerun()
-                    st.success("Log in successful.")
-                except Exception as e:
-                    st.error("Email or password is wrong.")
-
-
-if not st.session_state.logged_in and not st.user.is_logged_in:
-    login_screen()
-    col1,col2,col3= st.columns([1,1,1])
-    with col2:
-        st.button("Log in with Google", on_click=st.login, use_container_width=True)
+if is_firebase_logged or is_google_logged:
+    main_app()
 else:
-    display_name = st.session_state.get("user_email") or st.user.name
-    st.header(f"Welcome, {display_name}!")
-    if st.button("Log out"):
-        st.session_state.logged_in = False
-        if st.user.is_logged_in:
-            st.logout()
-        st.rerun()
+    login_screen()
