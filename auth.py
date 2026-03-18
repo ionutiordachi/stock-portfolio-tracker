@@ -5,6 +5,7 @@ FIREBASE_API_KEY = st.secrets["firebase"]["apiKey"]
 
 FIREBASE_SIGN_IN_URL = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
 FIREBASE_SIGN_UP_URL = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FIREBASE_API_KEY}"
+
 def firebase_register(email:str, password:str)->dict:
     payload = {
         "email": email,
